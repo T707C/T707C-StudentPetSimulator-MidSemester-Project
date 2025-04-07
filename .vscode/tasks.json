@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build All",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "main.cpp",
+                "Pets\\Pet.cpp",
+                "Pets\\QuadraticHashTable.cpp",
+                "-o",
+                "output\\main.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
