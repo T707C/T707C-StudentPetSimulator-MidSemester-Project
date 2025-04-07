@@ -26,8 +26,8 @@
     #include <algorithm>
     #include <cctype>
     #include <limits>
-    #include "QuadraticHashTable.h"
-    #include "Pets.h"
+    #include "Pets/QuadraticHashTable.h"
+    #include "Pets/Pets.h"
     using namespace std;
     
     // We'll declare the rename function from PetUpdate.cpp
