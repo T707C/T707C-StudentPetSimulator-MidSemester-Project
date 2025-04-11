@@ -4,14 +4,19 @@
         {
             "label": "Build All",
             "type": "shell",
-            "command": "g++",
+           "command": "g++",
             "args": [
                 "main.cpp",
-                "Pets\\Pet.cpp",
-                "Pets\\QuadraticHashTable.cpp",
-                "-o",
-                "output\\main.exe"
-            ],
+                "Pets/Pet.cpp",
+                "Pets/QuadraticHashTable.cpp",
+                 "Tasks/Task.cpp",
+                 "Tasks/TaskManager.cpp",
+                 "-o",
+                "output/main.exe"
+],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
             "group": {
                 "kind": "build",
                 "isDefault": true
