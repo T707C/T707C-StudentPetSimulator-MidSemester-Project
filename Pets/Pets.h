@@ -1,22 +1,46 @@
-#ifndef PETS_H
-#define PETS_H
+// ======== Pet Class Definition ========
+// This header defines the Pet class, representing the user's single
+// companion. Each Pet has a name and type (e.g., dog, cat), along with
+// stats: IQ, Love, EXP, and Level. Methods allow rewarding EXP and
+// leveling up when thresholds are met.
+
+#ifndef PET_H
+#define PET_H
 
 #include <string>
 using namespace std;
 
-// Pet struct clearly defines the data stored for each pet
-struct Pet {
-    string name;   
-    string type;   
-    int iq;
-    int love;
+class Pet {
+private:
+    string name;    // Pet's given name
+    string type;    // Pet species/category (dog, cat, etc.)
+    int iq;         // Intelligence stat (default 1)
+    int love;       // Affection stat (default 1)
+    int exp;        // Experience points accumulated
+    int level;      // Current level (default 1)
 
-    // Constructor for quick initialization
-    Pet(string petName = "", string petType = "", int petIQ = 1, int petLove = 1);
+public:
+    // Constructor: initialize a pet with given name & type;
+    // stats default to iq=1, love=1, exp=0, level=1
+    Pet(const string &name, const string &type);
+
+    // Reward the pet with EXP; increases exp by amount
+    void gainEXP(int amount);
+
+    // Returns true if exp meets threshold to level up
+    bool shouldLevelUp() const;
+
+    // Level up: increment level, reset exp, and boost stats
+    void levelUp();
+
+    // Simple getters for each field
+    const string& getName() const;
+    const string& getType() const;
+    int getIQ() const;
+    int getLove() const;
+    int getEXP() const;
+    int getLevel() const;
 };
 
-    // Rename Pet function declared here
-bool renamePet(string oldName, string newName, class QuadraticHashTable &table);
-
-
 #endif
+
