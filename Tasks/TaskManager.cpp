@@ -1,82 +1,51 @@
+// ======== TaskManager Implementation ========
+// Implements the methods declared in TaskManager.h.
+// Provides functionality to manage the lifecycle of tasks in-memory.
+
 #include "TaskManager.h"
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-using namespace std;
-#include "Task.h"
+#include <iostream>      // For console output (std::cout)
 
-
-void TaskManager::addTask(const string& name, conststring& type) {
-    tasks.push_back(Task(name, type));
-    cout << "Task \" " << name << "\"added.\n"; 
+// addTask: constructs a new Task and adds it to the tasks vector
+void TaskManager::addTask(const string &name, const string &type) {
+    tasks.emplace_back(name, type, false);
+    cout << "[+] Task added: '" << name << "' (" << type << ")\n";
 }
 
-void TaskManager::removeTask(int index) {
-    if (index >= 0 && index < tasks.size()) {
-        tasks.erase(tasks.begin() + index);
-        cout << "Task at index " << index << " removed.\n";
-    } else {
-        cout << "Invalid index.\n";
+// viewTasks: lists all tasks, prefixing each with [x] or [ ]
+void TaskManager::viewTasks() const {
+    if (tasks.empty()) {
+        cout << "No tasks available.\n";
+        return;
+    }
+    cout << "\n-- Current Tasks --\n";
+    for (const auto &t : tasks) {
+        cout << (t.completed ? "[x] " : "[ ] ")
+             << t.name << " (" << t.type << ")\n";
     }
 }
 
-void TaskManager::markTaskCompleted(int index) {
-    if (index >= 0 && index < tasks.size()) {
-        tasks[index].completed = true;
-        cout << "Task at index " << index << " marked as completed.\n";
-    } else {
-        cout << "Invalid index.\n";
-    }
-}
-
-void TaskManager::displayTasks() {
-    cout << "Tasks:\n";
-    for (int i = 0; i < tasks.size(); ++i) {
-        cout << i << ": " << tasks[i].name << " (" << tasks[i].type << ") - "
-             << (tasks[i].completed ? "Completed" : "Not Completed") << "\n";
-    }
-}
-
-
-void TaskManager::saveTasksToFile(const string& filename) {
-    ofstream file(filename);
-    if (file.is_open()) {
-        for (const auto& task : tasks) {
-            file << task.name << "," << task.type << "," << task.completed << "\n";
+// completeTask: searches for a task by name and marks it completed
+bool TaskManager::completeTask(const string &name) {
+    for (auto &t : tasks) {
+        if (t.name == name && !t.completed) {
+            t.completed = true;
+            cout << "[✔] Task completed: '" << name << "'\n";
+            return true;
         }
-        file.close();
-        cout << "Tasks saved to " << filename << ".\n";
-    } else {
-        cout << "Unable to open file.\n";
     }
+    cout << "[!] Task '" << name << "' not found or already completed.\n";
+    return false;
 }
 
-
-void TaskManager::loadTasksFromFile(const string& filename) {
-    ifstream file(filename);
-    if (file.is_open()) {
-        tasks.clear(); // Clear existing tasks
-        string line;
-        while (getline(file, line)) {
-            string name, type;
-            bool completed;
-            size_t pos1 = line.find(',');
-            size_t pos2 = line.find(',', pos1 + 1);
-            name = line.substr(0, pos1);
-            type = line.substr(pos1 + 1, pos2 - pos1 - 1);
-            completed = (line.substr(pos2 + 1) == "1");
-            tasks.push_back(Task(name, type, completed));
+// deleteTask: removes the first task matching the given name
+bool TaskManager::deleteTask(const string &name) {
+    for (auto it = tasks.begin(); it != tasks.end(); ++it) {
+        if (it->name == name) {
+            tasks.erase(it);
+            cout << "[-] Task deleted: '" << name << "'\n";
+            return true;
         }
-        file.close();
-        cout << "Tasks loaded from " << filename << ".\n";
-    } else {
-        cout << "Unable to open file.\n";
     }
+    cout << "[!] Task '" << name << "' not found.\n";
+    return false;
 }
-
-void TaskManager::clearTasks() {
-    tasks.clear();
-    cout << "All tasks cleared.\n";
-}
-

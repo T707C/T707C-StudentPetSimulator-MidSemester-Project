@@ -39,3 +39,5 @@ bool renamePet(string oldName, string newName, QuadraticHashTable &table) {
 }
 
 // (Future additions: Pet-related methods, such as leveling logic)
+//comment
+//MY COMMENT

@@ -3,118 +3,86 @@
 // Date: ...
 
 
-/* === Menu System (Teammate: *insert name*) ===
-    
-    This file contains the main program loop for interacting with
-    the hash table.
-    
-    You'll build a simple menu that allows the user to: 
-    1. Add a new pet
-    2.View a pet's information
-    3. Delete a pet
-    4. Exit the program
-    
-    This will connect with the QuadraticHashTable class already build.
-    The job here is to fill in the switch-case logic using table.insert(),
-    table.search(), and table.remove().
-    
-    */
+// ======== Task Pet Simulator ========
+// This is the program entry point and menu loop for the Task Pet Simulator.
+// Right now, we focus solely on the Task Management system:
+//  - It initializes a TaskManager instance
+//  - Presents a menu for adding, viewing, completing, and deleting tasks
+//  - Exits cleanly when the user chooses to quit
+// Later, we will integrate pet creation and stat-tracking around these tasks.
 
 
-    #include <iostream>
-    #include <string>
-    #include <algorithm>
-    #include <cctype>
-    #include <limits>
-    #include "Pets/QuadraticHashTable.h"
-    #include "Pets/Pets.h"
-    using namespace std;
-    
-    // We'll declare the rename function from PetUpdate.cpp
-    void updatePetName(QuadraticHashTable &table);
-    
-    static void trimString(string &str) {
-        while (!str.empty() && isspace(str.back())) str.pop_back();
-        while (!str.empty() && isspace(str.front())) str.erase(0, 1);
-    }
-    
-    int main() {
-        QuadraticHashTable table;
-        while (true) {
-            cout << "\n~~~~ Pet Simulator ~~~~\n"
-                 << "1. Add a Pet\n"
-                 << "2. View a Pet\n"
-                 << "3. Delete a Pet\n"
-                 << "4. Rename a Pet\n"
-                 << "5. Show All Pets\n"
-                 << "6. Exit\n"
-                 << "Select an option (1-6): ";
-    
-            int choice;
-            cin >> choice;
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // flush leftover \n
-    
-            if (choice == 1) {
-                // Add
-                string petName, petType;
-                cout << "Enter pet name: ";
-                getline(cin, petName);
-                trimString(petName);
-    
-                cout << "Enter pet type: ";
-                getline(cin, petType);
-                trimString(petType);
-    
-                table.insert(petName, petType);
-    
-            } else if (choice == 2) {
-                // View one pet
-                string petName;
-                cout << "Enter pet name to search for: ";
-                getline(cin, petName);
-                trimString(petName);
-    
-                string result = table.search(petName);
-                cout << "Pet Info: " << result << endl;
-    
-            } else if (choice == 3) {
-                // Delete
-                string petName;
-                cout << "Enter pet name to delete: ";
-                getline(cin, petName);
-                trimString(petName);
-    
-                table.removePet(petName);
-    
-            } else if (choice == 4) {
-                // Rename a Pet
-                string oldName, newName;
-                cout << "Enter the old pet name: ";
-                getline(cin, oldName);
+// ------------------------------------------------------------------------------------------//
 
-                cout << "Enter the new pet name: ";
-                getline(cin, newName);
 
-                if (!renamePet(oldName, newName, table)) {
-                    cout << "Failed to rename pet. Check if pet's name is correct.\n";
-                } else {
-                    cout << "Pet renamed successfully from '" << oldName << "' to '" << newName << "'.\n";
-                }
-                    break;
-                
-            
-    
-            } else if (choice == 5) {
-                table.showAllPets();
-    
-            } else if (choice == 6) {
-                cout << "Exiting the program. Goodbye!\n";
+
+#include <iostream>         // For input/output streams (cin, cout)
+#include <limits>           // For streamsize and numeric_limits
+#include "Tasks/TaskManager.h"  // TaskManager handles Task CRUD operations
+
+using namespace std;
+
+int main() {
+    // Create the TaskManager which stores and operates on Task objects
+    TaskManager taskManager;
+
+    while (true) {
+        // Display the main menu for task operations
+        cout << "\n==== TASK PET SIMULATOR - TASK MENU ====\n";
+        cout << "1. Add Task\n";
+        cout << "2. View Tasks\n";
+        cout << "3. Complete Task\n";
+        cout << "4. Delete Task\n";
+        cout << "5. Exit\n";
+        cout << "Select an option (1-5): ";
+
+        int choice;
+        cin >> choice;
+        // Clear leftover newline from the input buffer
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        string name, type;
+        switch (choice) {
+            case 1:
+                // Add a new task: prompt for name and type
+                cout << "Enter task name: ";
+                getline(cin, name);
+                cout << "Enter task type (e.g., academic, personal): ";
+                getline(cin, type);
+                taskManager.addTask(name, type);
+                break;
+
+            case 2:
+                // View all current tasks with their status
+                taskManager.viewTasks();
+                break;
+
+            case 3:
+                // Mark a specific task as complete
+                cout << "Enter task name to complete: ";
+                getline(cin, name);
+                taskManager.completeTask(name);
+                break;
+
+            case 4:
+                // Delete a specific task from the list
+                cout << "Enter task name to delete: ";
+                getline(cin, name);
+                taskManager.deleteTask(name);
+                break;
+
+            case 5:
+                // Exit the application
+                cout << "Exiting... Goodbye!\n";
                 return 0;
-    
-            } else {
-                cout << "Invalid choice. Try again.\n";
-            }
+
+            default:
+                // Handle invalid menu choices
+                cout << "Invalid choice. Please try again.\n";
+                break;
         }
-        return 0;
-    };
+    }
+
+    return 0; // Unreachable but provided for clarity
+}
     
