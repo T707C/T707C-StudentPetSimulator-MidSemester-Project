@@ -12,3 +12,4 @@
 //   - completed: sets the initial completion flag (false by default)
 Task::Task(const string &name, const string &type, bool completed)
     : name(name), type(type), completed(completed) {}
+

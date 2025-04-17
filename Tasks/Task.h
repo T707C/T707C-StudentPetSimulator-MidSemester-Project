@@ -23,4 +23,5 @@ struct Task {
     Task(const string &name = "", const string &type = "", bool completed = false);
 };
 
-#endif // TASK_H
+#endif 
+
