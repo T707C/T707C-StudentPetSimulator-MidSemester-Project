@@ -126,20 +126,37 @@ int main() {
                 cout << "Level: " << pet.getLevel() << endl;
                 break;
 
-            case 6:
-                // Exit program (SAVE PROMPT ON EXIT)
-                // TODO: Ask user: "Save progress before exit? (Y/N)" //
-                // TODO: If yes, call DataManager::saveData(userName, pet, taskManager) //
-                cout << "Exiting... Goodbye!" << endl;
+            /* ------------------------- EXIT ------------------------ */
+            case 6: {
+                char save;
+                cout << "Save progress before exit? (Y/N): ";
+                cin >> save;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                save = static_cast<char>(toupper(save));
+
+                if (save == 'Y') {
+                    DataManager::saveData(userName, pet, taskManager);
+                    cout << "Progress saved.\n";
+                }
+                cout << "Exiting… Goodbye!\n";
                 return 0;
+            }
+            /* ------------------------ RESET ------------------------ */
+            case 7: {
+                char confirm;
+                cout << "⚠  This will ERASE all saved data.  Are you sure? (Y/N): ";
+                cin >> confirm;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                confirm = static_cast<char>(toupper(confirm));
 
-            case 7: 
-                // === FEATURE: RESET ===
-                // TODO: Prompt confirmation
-                // TODO: If yes, call DataManager::resetData();
-                // TODO: Exit or restart application
-                break;
-
+                if (confirm == 'Y') {
+                    DataManager::resetData();
+                    cout << "All data cleared.  Restart the program to begin anew.\n";
+                    return 0;      // terminate after reset
+                }
+                break;             // user changed their mind
+            }
+            
             default:
                 cout << "Invalid choice. Please try again." << endl;
         }
