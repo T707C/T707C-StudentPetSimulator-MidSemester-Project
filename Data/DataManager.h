@@ -38,7 +38,143 @@ namespace DataManager {
      *       * tasks.txt: each line represents a Task record, e.g., "<name>;<type>;<completed>".
      *   - Trim whitespace and validate formats.
      */
-    bool loadData(std::string &userName, Pet &pet, TaskManager &tm);
+    bool loadData(std::string &userName, Pet &pet, TaskManager &tm){
+
+        // Load user data
+
+        ifstream userFile("data/user.txt");
+
+        if (!userFile.is_open()) return false;
+
+        getline(userFile, userName);
+
+        userFile.close();
+
+       
+
+        // Load pet data
+
+        ifstream petFile("data/pet.txt");
+
+        if (!petFile.is_open()) return false;
+
+       
+
+        getline(petFile, pet.name);
+
+        getline(petFile, pet.type);
+
+        petFile >> pet.iq >> pet.love >> pet.exp >> pet.level;
+
+        petFile.close();
+
+        // Load task data
+
+        ifstream taskFile("data/tasks.txt");
+
+        if (!taskFile.is_open()) return false;
+
+       
+
+        string taskLine;
+
+        while (std::getline(taskFile, taskLine)) {
+
+            // Parse task data (name, type, completed status)
+
+            Task task;
+
+            size_t pos1 = taskLine.find(';');
+
+            size_t pos2 = taskLine.find(';', pos1 + 1);
+
+            task.name = taskLine.substr(0, pos1);
+
+            task.type = taskLine.substr(pos1 + 1, pos2 - pos1 - 1);
+
+            task.completed = taskLine.substr(pos2 + 1) == "1";
+
+            tm.addTask(task);  // Add task to TaskManager
+
+        }
+
+        taskFile.close();
+
+        return true;
+
+   }
+
+
+
+    void saveData(const std::string &userName, const Pet &pet, const TaskManager &tm){
+
+       // Save user data
+
+       ofstream userFile("data/user.txt");
+
+       if (userFile.is_open()) {
+
+           userFile << userName << "\n";
+
+           userFile.close();
+
+       }
+
+
+
+       // Save pet data (name, type, iq, love, exp, level)
+
+       ofstream petFile("data/pet.txt");
+
+       if (petFile.is_open()) {
+
+           petFile << pet.name << "\n";
+
+           petFile << pet.type << "\n";
+
+           petFile << pet.iq << "\n" << pet.love << "\n" << pet.exp << "\n" << pet.level << "\n";
+
+           petFile.close();
+
+       }
+
+
+
+        // Save task data
+
+        ofstream taskFile("data/tasks.txt");
+
+        if (taskFile.is_open()) {
+
+            for (const auto &task : tm.getTasks()) {
+
+                taskFile << task.name << ";" << task.type << ";" << (task.completed ? "1" : "0") << "\n";
+
+            }
+
+            taskFile.close();
+
+        }
+
+    };
+
+
+
+    void resetData(){
+
+            // Delete or truncate files
+
+            remove("data/user.txt");
+
+            remove("data/pet.txt");
+
+            remove("data/tasks.txt");
+
+            // Optionally, delete the data directory if empty
+
+            // You may need to check the directory contents and delete it if empty
+
+        }
 
     /**
      * saveData
