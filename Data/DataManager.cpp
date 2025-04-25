@@ -6,7 +6,7 @@
 #include "DataManager.h"
 #include <fstream>      
 #include <filesystem>   
-#include <sstream>      /
+#include <sstream>      
 #include <iostream> 
 #include <algorithm> 
 
@@ -47,13 +47,14 @@ bool loadData(std::string &userName, Pet &pet, TaskManager &tm) {
     
     std::getline(petFile, petName);
     std::getline(petFile, petType);
-    std::getline(petFile, line); petIQ = stoi(line);
-    std::getline(petFile, line); petLove = stoi(line);
-    std::getline(petFile, line); petEXP = stoi(line);
-    std::getline(petFile, line); petLevel = stoi(line);
+    std::getline(petFile, line); iq = stoi(line);       // Was petIQ
+    std::getline(petFile, line); love = stoi(line);     // Was petLove
+    std::getline(petFile, line); exp = stoi(line);      // Was petEXP
+    std::getline(petFile, line); level = stoi(line);    // Was petLevel
     
     pet = Pet(petName, petType);
-    pet.setStats(petIQ, petLove, petEXP, petLevel);
+    pet.gainEXP(exp - pet.getEXP());  // Adjust EXP if needed
+    pet.iq = iq;                      // Make IQ public or add setter
 
     // 5. Open tasks.txt, loop each line and parse Task entries:
     std::ifstream taskFile("data/tasks.txt");
