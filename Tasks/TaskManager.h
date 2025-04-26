@@ -28,6 +28,8 @@ public:
     // deleteTask: remove the first matching Task by name
     // returns true if the task was found and deleted, false otherwise
     bool deleteTask(const string &name);
+
+    const vector<Task>& getTasks() const { return tasks; }
 };
 
 #endif 
