@@ -27,10 +27,15 @@ static void trimString(string &str) {
 }
 
 int main() {
-    // ----- Attempt To Load A Previous Session ----- //
+    string userName;
+    Pet pet("", "");
+    TaskManager taskManager;
+
     if (!DataManager::loadData(userName, pet, taskManager)) {
-        // first-run: prompt for name & pet setup
-    }
+        // First-run setup
+        cout << "Enter your name: ";
+        getline(cin, userName);
+        trimString(userName);
 
     // ---- USER SETUP ---- //
         // TODO: Declare a string to hold the user's name
