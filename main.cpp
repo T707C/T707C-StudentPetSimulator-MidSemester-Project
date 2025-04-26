@@ -15,7 +15,7 @@
 #include <string>
 #include <limits>
 #include <cctype>
-#include "Pets/Pets.h"            // Pet class: name, type, stats, leveling
+#include "Pets/Pet.h"            // Pet class: name, type, stats, leveling
 #include "Tasks/TaskManager.h"  // TaskManager: handles Task list operations
 
 using namespace std;

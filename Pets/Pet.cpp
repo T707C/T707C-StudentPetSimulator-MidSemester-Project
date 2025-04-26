@@ -5,7 +5,7 @@
 //  - Checking and performing level-ups when EXP thresholds are reached
 //  - Accessing Pet properties via getters
 
-#include "Pets.h"  // Class declaration
+#include "Pet.h"  // Class declaration
 #include <iostream>  // For console output
 
 // Constructor: initialize name, type, and default stats
