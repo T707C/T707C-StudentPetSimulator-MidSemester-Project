@@ -42,35 +42,41 @@ bool loadData(std::string &userName, Pet &pet, TaskManager &tm) {
     std::ifstream petFile("data/pet.txt");
     if (!petFile) return false;
 
-    std::string petName, petType, line;
+    std::string line;
     int iq, love, exp, level;
     
-    std::getline(petFile, petName);
-    std::getline(petFile, petType);
-    std::getline(petFile, line); iq = stoi(line);       // Was petIQ
-    std::getline(petFile, line); love = stoi(line);     // Was petLove
-    std::getline(petFile, line); exp = stoi(line);      // Was petEXP
-    std::getline(petFile, line); level = stoi(line);    // Was petLevel
+    std::getline(petFile, line);  // Name
+    string petName = line;
+    std::getline(petFile, line);  // Type
+    string petType = line;
+    
+    std::getline(petFile, line); iq = stoi(line);
+    std::getline(petFile, line); love = stoi(line);
+    std::getline(petFile, line); exp = stoi(line);
+    std::getline(petFile, line); level = stoi(line);
     
     pet = Pet(petName, petType);
-    pet.gainEXP(exp - pet.getEXP());  // Adjust EXP if needed
-    pet.iq = iq;                      // Make IQ public or add setter
+    pet.setIQ(iq);
+    pet.setLove(love);
+    pet.setEXP(exp);
+    pet.setLevel(level);
+
 
     // 5. Open tasks.txt, loop each line and parse Task entries:
     std::ifstream taskFile("data/tasks.txt");
     if (!taskFile) return false;
     
     while (std::getline(taskFile, line)) {
-    std::stringstream ss(line);
-    std::string name, type, flag;
-    std::getline(ss, name, ';');
-    std::getline(ss, type, ';');
-    std::getline(ss, flag, ';');
-    bool completed = (flag == "1");
+        stringstream ss(line);
+        string name, type, flag;
+        getline(ss, name, ';');
+        getline(ss, type, ';');
+        getline(ss, flag, ';');
         
-    tm.addTask(name, type);
-    if (completed) tm.completeTask(name);
-     }
+        tm.addTask(name, type);
+        if (flag == "1") tm.completeTask(name);
+    }
+
 
     return true;  // Indicate successful load
 }
@@ -93,12 +99,11 @@ void saveData(const std::string &userName, const Pet &pet, const TaskManager &tm
 
     // 4. Write tasks to data/tasks.txt, one per line in name;type;flag format:
     std::ofstream taskFile("data/tasks.txt");
-    for (const auto &t : tm.getAllTasks()) {
-            taskFile << t.name << ";" << t.type << ";" << (t.completed ? "1" : "0") << "\n";
-        }
+    for (const auto &t : tm.getTasks()) {
+        taskFile << t.name << ";" << t.type << ";" << (t.completed ? "1" : "0") << "\n";
 
     // 5. Optional: print confirmation
-    std::cout << "Progress saved successfully!\n";
+    std::cout << "Progress saved successfully!\n"; }
 }
 
 void resetData() {
