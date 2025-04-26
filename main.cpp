@@ -134,27 +134,25 @@ int main() {
                 cout << "Save progress before exit? (Y/N): ";
                 cin >> save;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                save = static_cast<char>(toupper(save));
-
-                if (save == 'Y') {
+                
+                if (toupper(save) == 'Y') {
                     DataManager::saveData(userName, pet, taskManager);
-                    cout << "Progress saved.\n";
+                    cout << "Progress saved!\n";
                 }
-                cout << "Exiting… Goodbye!\n";
+                cout << "Goodbye!\n";
                 return 0;
             }
             /* ------------------------ RESET ------------------------ */
             case 7: {
                 char confirm;
-                cout << "⚠  This will ERASE all saved data.  Are you sure? (Y/N): ";
+                cout << "⚠️  This will DELETE ALL DATA! Confirm? (Y/N): ";
                 cin >> confirm;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                confirm = static_cast<char>(toupper(confirm));
-
-                if (confirm == 'Y') {
+                
+                if (toupper(confirm) == 'Y') {
                     DataManager::resetData();
-                    cout << "All data cleared.  Restart the program to begin anew.\n";
-                    return 0;      // terminate after reset
+                    cout << "Data erased. Restart to begin fresh!\n";
+                    return 0;
                 }
                 break;             // user changed their mind
             }
