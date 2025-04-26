@@ -32,38 +32,29 @@ int main() {
     TaskManager taskManager;
 
     if (!DataManager::loadData(userName, pet, taskManager)) {
-        // First-run setup
+        cout << "=== FIRST-TIME SETUP ===\n";
+        
+        // Get user name
         cout << "Enter your name: ";
         getline(cin, userName);
         trimString(userName);
+        cout << "Hello, " << userName << "!\n";
 
-    // ---- USER SETUP ---- //
-        // TODO: Declare a string to hold the user's name
-        string userName;
+        // Pet creation
+        cout << "\n=== PET CREATION ===\n";
+        cout << "Choose pet type (dog/cat): ";
+        string petType;
+        getline(cin, petType);
+        trimString(petType);
 
-        // TODO: Prompt the user: "Enter your name: " and read into userName
-        // TODO: Trim whitespace
-    
-        // Example greeting: "Hello, <userName>!"
+        cout << "Name your pet: ";
+        string petName;
+        getline(cin, petName);
+        trimString(petName);
 
+        pet = Pet(petName, petType);  // Reinitialize pet
+    }
 
-    // --- PET SETUP --- //
-    cout << "Welcome to Task Pet Simulator!" << endl;
-    cout << "Choose your companion (dog/cat): ";
-    string petType;
-    getline(cin, petType);
-    trimString(petType);
-
-    cout << "Name your pet: ";
-    string petName;
-    getline(cin, petName);
-    trimString(petName);
-
-    // Create pet with default stats (IQ=1, Love=1, EXP=0, Level=1)
-    Pet pet(petName, petType);
-
-    // Initialize Task Manager
-    TaskManager taskManager;
 
     while (true) {
         // --- MAIN MENU ---

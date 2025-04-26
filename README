@@ -1,0 +1,26 @@
+# Task Pet Simulator 🐾📝
+
+A C++ CLI application that combines task management with a virtual pet. Complete tasks to level up your pet!
+
+**University Project**  
+*Course: CSC 327*  
+*Developed by: Taylor Carver & Team*
+
+---
+
+## Features
+- 🐶 Create and customize a virtual pet (name, type)
+- ✅ Add/view/complete/delete tasks
+- ⚡ Earn EXP for your pet by completing tasks
+- 📈 Level up your pet (IQ, Love, Level stats)
+- 💾 Save/load progress to/from local files
+- 🔄 Reset all data
+
+## Prerequisites
+- C++17 compiler (e.g., g++ 9.0+)
+- Standard Library Filesystem support
+
+## Installation
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/T707C/T707C-StudentPetSimulator-MidSemester-Project.git
