@@ -33,13 +33,19 @@ public:
     // Level up: increment level, reset exp, and boost stats
     void levelUp();
 
-    // Simple getters for each field
+    // Simple getters
     const string& getName() const;
     const string& getType() const;
     int getIQ() const;
     int getLove() const;
     int getEXP() const;
     int getLevel() const;
+
+    // Setters
+    void setIQ(int iq) { this->iq = iq; }
+    void setLove(int love) { this->love = love; }
+    void setEXP(int exp) { this->exp = exp; }
+    void setLevel(int level) { this->level = level; }
 };
 
 #endif
