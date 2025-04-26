@@ -65,12 +65,18 @@ int main() {
         cout << "4. Delete Task" << endl;
         cout << "5. View Pet Info" << endl;
         cout << "6. Exit" << endl;
+        cout << "7. Reset" << endl;
         // Add Option 7 (Rest Application)
-        cout << "Select an option (1-6): ";
+        cout << "Select an option (1-7): ";
 
         int choice;
-        cin >> choice;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Flush newline
+        if (!(cin >> choice)) {  // Handle non-integer input
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a number.\n";
+            continue;
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
         string name, type;
         switch (choice) {
