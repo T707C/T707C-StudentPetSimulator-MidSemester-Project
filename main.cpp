@@ -11,7 +11,7 @@
 // - Displays pet stats via a menu option.
 
 #include <iostream>
-#include "DataManager.h" 
+#include "Data/DataManager.h" 
 #include <string>
 #include <limits>
 #include <cctype>
