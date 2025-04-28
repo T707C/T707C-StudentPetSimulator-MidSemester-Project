@@ -24,3 +24,7 @@ A C++ CLI application that combines task management with a virtual pet. Complete
 1. Clone the repo:
    ```bash
    git clone https://github.com/T707C/T707C-StudentPetSimulator-MidSemester-Project.git
+
+
+## To Run
+" ./taskpet "
